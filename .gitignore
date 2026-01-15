@@ -5,3 +5,4 @@
 .Rproj.user/*
 logs/*
 output/Balance/*
+.DS_store
