@@ -3,6 +3,8 @@
 .RData
 .Ruserdata
 .Rproj.user/*
-logs/*
+log/*.pid
+log/*.log
+log/*.csv
 output/Balance/*
 .DS_store
