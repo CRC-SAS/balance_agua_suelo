@@ -94,6 +94,11 @@ source(glue::glue("{config$dir$lib}/R/Script.R"), echo = FALSE)
 source(glue::glue("{config$dir$lib}/R/Task.R"), echo = FALSE)
 #source(glue::glue("{config$dir$lib}/Helpers.R"), echo = FALSE)
 source(glue::glue("{config$dir$lib}/helpers.R"), echo = FALSE)
+source(glue::glue("{config$dir$lib}/workers.R"), echo = FALSE)
+source(glue::glue("{config$dir$lib}/funciones_auxiliares.R"), echo = FALSE)
+source(glue::glue("{config$dir$lib}/fenologia.R"), echo = FALSE)
+source(glue::glue("{config$dir$lib}/funciones_evapotranspiracion.R"), echo = FALSE)
+source(glue::glue("{config$dir$lib}/balance_fao56.R"), echo = FALSE)
 
 # c.1) Definir nombre del script
 script_name <- "BalanceAgua"
@@ -307,7 +312,7 @@ fenologia.resultados.tibble <- fenologia.resultados %>% purrr::map_dfr(~.x)
 # Guardar resultados en un archivo fácil de compartir
 results_filename <- glue::glue("./{config$dir$outputs}/{config$params$run_id}/fenologia.csv")
 script$info(glue::glue("Guardando resultados en el archivo {results_filename}"))
-data.table::fwrite(series.hibridas.resultados.tibble, file = results_filename, nThread = config$max.procesos)
+data.table::fwrite(fenologia.resultados.tibble, file = results_filename, nThread = config$max.procesos)
 
 # ---------------------------------------------------------------------------- 
 
@@ -365,7 +370,7 @@ balance.resultados.tibble <- balance.resultados %>% purrr::map_dfr(~.x)
 # Guardar resultados en un archivo fácil de compartir
 results_filename <- glue::glue("./{config$dir$outputs}/{config$params$run_id}/balance.agua.csv")
 script$info(glue::glue("Guardando resultados en el archivo {results_filename}"))
-data.table::fwrite(series.hibridas.resultados.tibble, file = results_filename, nThread = config$max.procesos)
+data.table::fwrite(balance.resultados.tibble, file = results_filename, nThread = config$max.procesos)
 # ---------------------------------------------------------------------------- 
 
 # -----------------------------------------------------------------------------#
@@ -376,9 +381,9 @@ data.table::fwrite(series.hibridas.resultados.tibble, file = results_filename, n
 script$stop()
 
 # b) Crear archivo .info
-info_filename <- glue::glue("{config$dir$data}/{config$files$indices_sequia$info_corrida}")
-if (file.exists(info_filename))
-  file.remove(info_filename)
-file.copy(from = script_logfile, to = info_filename)
+# info_filename <- glue::glue("{config$dir$data}/{config$files$indices_sequia$info_corrida}")
+# if (file.exists(info_filename))
+#   file.remove(info_filename)
+# file.copy(from = script_logfile, to = info_filename)
 
 # ------------------------------------------------------------------------------
