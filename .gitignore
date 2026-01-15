@@ -6,5 +6,5 @@
 log/*.pid
 log/*.log
 log/*.csv
-output/Balance/*
+output/Balance/*.csv
 .DS_store
